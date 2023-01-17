@@ -3,6 +3,8 @@ import json
 from mongoengine.queryset.visitor import Q
 from models import User, Message
 from mongoengine.errors import *
+from utils.mail import sendEmail
+
 users = Blueprint('users', __name__)
 
 @users.get("/")
@@ -138,6 +140,51 @@ def delete(userId):
         return dict(error="User not found"), 404
     except NotUniqueError:
         return dict(error="Already exists"), 409
+    except Exception as e:
+        print(e)
+        return dict(error="Something went wrong"), 500
+
+
+@users.post("/<string:userId>/mail")
+def send_mail(userId):
+    try:
+        u = User.objects(pk=userId).first()
+        if not u:
+            raise ValidationError()
+        subject=request.json.get("subject", "Welcome").strip() or "Welcome"
+        message=request.json.get("message")
+        if not message:
+            return dict(error="Message is required"), 400
+        m = Message(subject=subject, message=message,to=u)
+        m.save()
+        sent = sendEmail(to=u.email, subject=m.subject,message=m.message)
+        if not sent:
+             return dict(error="Something went wrong with tbe third party email service"), 503
+        m.sent = True
+        m.save()
+        return dict(message="Email sent", data=str(sent))
+    except ValidationError:
+        return dict(error="User not found"), 404
+    except Exception as e:
+        print(e)
+        return dict(error="Something went wrong"), 500
+
+@users.post("/mail")
+def send_mails():
+    try:
+        us = User.objects()
+        if not len(us):
+            return dict(error="No users present"), 403
+        subject=request.json.get("subject", "Welcome").strip() or "Welcome"
+        message=request.json.get("message","").strip()
+        if not message:
+            return dict(error="Message is required"), 400
+        ms = list(map(lambda u: Message(subject=subject, message=message,to=u,sent=True), us))
+        sent = sendEmail(to=list(map(lambda u:u.email, us)), subject=subject,message=message)
+        if not sent:
+             return dict(error="Something went wrong with tbe third party email service"), 503
+        Message.objects.insert(ms)
+        return dict(message="Emails sent to everyone", data=str(sent))
     except Exception as e:
         print(e)
         return dict(error="Something went wrong"), 500

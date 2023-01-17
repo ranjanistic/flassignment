@@ -1,7 +1,10 @@
+# use quotes for string values
 ENV = "development"
-SECRET_KEY = ""
+SECRET_KEY = "04dc7ef3d55f723e114f22c80557567143b03aa5fa7c6baee582717357c221c8"
 MONGO_URI = "mongodb://localhost:27017"
 DB_NAME = "flassignDB"
 HOST = "127.0.0.1"
 PORT = 4000
+MAIL_FROM = "Your sendgrid mail from"
+SENDGRID_API_KEY = "Your sendgrid api key"
 PIDFILE = "app.pid"

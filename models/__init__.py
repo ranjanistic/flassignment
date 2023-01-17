@@ -9,7 +9,8 @@ class User(mongo.Document):
     last_name = mongo.StringField(max_length=100)
 
 class Message(mongo.Document):
-    subject = mongo.StringField(max_length=100,required=True)
-    body = mongo.StringField(max_length=100,required=True)
+    subject = mongo.StringField(max_length=200,required=True)
+    message = mongo.StringField(max_length=1000,required=True)
     to = mongo.ReferenceField(User, reverse_delete_rule=mongo.CASCADE)
+    sent = mongo.BooleanField(default=False)
 
