@@ -1,0 +1,11 @@
+bin/
+lib/
+lib64
+*.cfg
+share/
+__pycache__
+config.toml
+*.log
+*.pid
+include/
+venv/

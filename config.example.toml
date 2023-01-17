@@ -1,0 +1,7 @@
+ENV = "development"
+SECRET_KEY = ""
+MONGO_URI = "mongodb://localhost:27017"
+DB_NAME = "flassignDB"
+HOST = "127.0.0.1"
+PORT = 4000
+PIDFILE = "app.pid"
