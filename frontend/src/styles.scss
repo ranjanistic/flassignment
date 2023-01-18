@@ -1,8 +1,7 @@
 body {
-    background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
-    font-family: Noto Sans, Helvetica, sans-serif;
-    color: #666;
-    letter-spacing: 1px;
+    background: #ffffff;
+    font-family: Helvetica, sans-serif;
+    color: #1e1e1e;
     padding: 10px;
     min-height: 100vh;
 }
@@ -53,11 +52,11 @@ h1 {
 
 h1,
 h2 {
-    color: #666;
+    color: #000;
 }
 
 .main-content {
-    width: 80%;
+    width: 90%;
     margin: auto auto 100px auto;
 }
 
@@ -66,7 +65,7 @@ h2 {
 }
 
 .form {
-    width: 50%;
+    width: 70%;
     float: left;
     margin-bottom: 50px;
 }
@@ -104,28 +103,27 @@ h2 {
 }
 
 .input-control {
-    border: 1px solid #ccc;
-    color: #555555;
+    border: 2px solid #1e1e1e;
+    border-radius: 4px;
+    color: #000;
     background-color: #fff;
     height: 46px;
     font-size: 18px;
     line-height: 1.3333333;
     border-radius: 0;
     display: block;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     padding: 10px;
     width: 100%;
 
     &:focus {
         outline: none;
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-            0 0 8px rgba(23, 24, 24, 0.6);
-        border: 1px solid #cecece;
+        border: 2px solid #000;
     }
 }
 
 button {
-    margin-right: 5px;
+    margin: 5px;
 }
 
 .submit-btn {
