@@ -66,16 +66,18 @@ const UserForm = (props) => {
                         onChange={handleInputChange}
                     />
                 </Form.Group>
-                <Form.Group controlId="phone">
+                <Form.Group controlId="cp">
                     <Form.Label>User Phone</Form.Label>
                     <Form.Control
                         className="input-control"
                         type="number"
                         name="cp"
                         value={cp}
-                        placeholder="+91"
+                        placeholder="Country dial code (+91)"
                         onChange={handleInputChange}
                     />
+                </Form.Group>
+                <Form.Group controlId="phone">
                     <Form.Control
                         className="input-control"
                         type="number"

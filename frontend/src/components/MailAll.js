@@ -11,7 +11,7 @@ const MailAll = ({ history }) => {
                 history.push("/");
             })
             .catch((err) => {
-                setError(err.error);
+                setError(err.data.error);
             });
     };
 

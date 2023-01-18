@@ -47,7 +47,7 @@ const MailForm = (props) => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setUser((prevState) => ({
+        setMail((prevState) => ({
             ...prevState,
             [name]: value,
         }));
@@ -81,7 +81,7 @@ const MailForm = (props) => {
                     />
                 </Form.Group>
 
-                <Form.Group controlId="sendgrid">
+                <Form.Group controlId="fromMail">
                     <Form.Label>(Optional) Sendgrid details</Form.Label>
                     <Form.Control
                         className="input-control"
@@ -91,6 +91,8 @@ const MailForm = (props) => {
                         placeholder="Sendgrid 'from' address"
                         onChange={handleInputChange}
                     />
+                </Form.Group>
+                <Form.Group controlId="apikey">
                     <Form.Control
                         className="input-control"
                         type="password"

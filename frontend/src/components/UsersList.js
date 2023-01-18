@@ -12,11 +12,9 @@ const UsersList = () => {
         setLog("Getting users");
         api.get(`/v1/users/`)
             .then((res) => {
-                setLog(JSON.stringify(res.data));
-                setUsers(res.data);
+                setUsers(res.data.users);
             })
             .catch((err) => {
-                setLog(err.data);
                 setErrorMsg(err.data.error);
             });
     }, []);
@@ -27,7 +25,7 @@ const UsersList = () => {
                 api.get(`/v1/users/`)
                     .then((res) => {
                         setLog(JSON.stringify(res.data));
-                        setUsers(res.data);
+                        setUsers(res.data.users);
                     })
                     .catch((err) => {
                         setLog(err.data);

@@ -13,7 +13,7 @@ const MailUser = ({ history }) => {
                 setUser(res.data);
             })
             .catch((err) => {
-                setError(err.error);
+                setError(err.data.error);
             });
     }, []);
 
@@ -23,7 +23,7 @@ const MailUser = ({ history }) => {
                 history.push("/");
             })
             .catch((err) => {
-                setError(err.error);
+                setError(err.data.error);
             });
     };
 
