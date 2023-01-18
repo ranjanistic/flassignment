@@ -8,12 +8,12 @@ const AddUser = ({ history }) => {
     const [error, setError] = useState("");
 
     const handleOnSubmit = (user) => {
-        api.post(`/v1/users`, { ...user })
+        api.post(`/v1/users/`, { ...user })
             .then((res) => {
                 history.push("/");
             })
             .catch((err) => {
-                setError(err.error);
+                setError(err.data.error);
             });
     };
 

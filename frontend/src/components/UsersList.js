@@ -12,31 +12,31 @@ const UsersList = () => {
         setLog("Getting users");
         api.get(`/v1/users/`)
             .then((res) => {
-                setLog(res);
+                setLog(JSON.stringify(res.data));
                 setUsers(res.data);
             })
             .catch((err) => {
-                setLog(err);
-                setErrorMsg(err.error);
+                setLog(err.data);
+                setErrorMsg(err.data.error);
             });
     }, []);
 
     const handleRemoveUser = (id) => {
-        api.delete(`/v1/users/${id}/`)
+        api.delete(`/v1/users/${id}`)
             .then((res) => {
                 api.get(`/v1/users/`)
                     .then((res) => {
-                        setLog(res);
+                        setLog(JSON.stringify(res.data));
                         setUsers(res.data);
                     })
                     .catch((err) => {
-                        setLog(err);
-                        setErrorMsg(err.error);
+                        setLog(err.data);
+                        setErrorMsg(err.data.error);
                     });
             })
             .catch((err) => {
                 setLog(err);
-                setErrorMsg(err.error);
+                setErrorMsg(err.data.error);
             });
     };
 
