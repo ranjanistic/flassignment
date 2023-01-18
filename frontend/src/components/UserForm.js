@@ -11,8 +11,8 @@ const UserForm = (props) => {
         cp: "",
     });
 
-    const [errorMsg, setErrorMsg] = useState(props.error || "");
-    const [successMsg, setSuccessMsg] = useState(props.success || "");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
 
     useEffect(() => {
         if (props.uid) {

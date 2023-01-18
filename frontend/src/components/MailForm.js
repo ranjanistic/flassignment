@@ -19,7 +19,7 @@ const MailForm = () => {
         api.get(`/v1/users/`)
             .then((res) => {
                 setErrorMsg("");
-                setUsers([{ email: "Everyone" }, ...res.data.users]);
+                setUsers([...res.data.users]);
             })
             .catch((err) => {
                 setSuccessMsg("");
