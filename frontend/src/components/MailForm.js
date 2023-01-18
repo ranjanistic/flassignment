@@ -2,24 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import api from "../utils/axios";
 
-const MailForm = (props) => {
-    const [users, setUsers] = useState([{ email: "Everyone" }]);
-    const [mail, setMail] = useState(() => ({
+const MailForm = () => {
+    const [users, setUsers] = useState([]);
+    const [mail, setMail] = useState({
         subject: "Welcome!",
         message: "",
         apikey: "",
         fromMail: "",
         userId: "",
-    }));
+    });
 
-    const [errorMsg, setErrorMsg] = useState(props.error || "");
-    const [successMsg, setSuccessMsg] = useState(props.success || "");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
 
     useEffect(() => {
         api.get(`/v1/users/`)
             .then((res) => {
                 setErrorMsg("");
-                setUsers(res.data.users);
+                setUsers([{ email: "Everyone" }, ...res.data.users]);
             })
             .catch((err) => {
                 setSuccessMsg("");
@@ -80,7 +80,6 @@ const MailForm = (props) => {
         <div className="main-form">
             {errorMsg && <p className="errorMsg">{errorMsg}</p>}
             {successMsg && <p className="successMsg">{successMsg}</p>}
-            <div>Sending mail to?</div>
             <Form onSubmit={handleOnSubmit}>
                 <Form.Group controlId="to">
                     <Form.Select
@@ -115,7 +114,6 @@ const MailForm = (props) => {
                         onChange={handleInputChange}
                     />
                 </Form.Group>
-
                 <Form.Group controlId="fromMail">
                     <Form.Label>(Optional) Sendgrid details</Form.Label>
                     <Form.Control
