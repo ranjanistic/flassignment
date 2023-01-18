@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import api from "../utils/axios";
 
 const UserForm = (props) => {
     const [user, setUser] = useState({
@@ -13,8 +14,8 @@ const UserForm = (props) => {
     const [errorMsg, setErrorMsg] = useState(props.error || "");
     const [successMsg, setSuccessMsg] = useState(props.success || "");
 
-    if (props.uid) {
-        useEffect(() => {
+    useEffect(() => {
+        if (props.uid) {
             api.get(`/v1/users/${props.uid}`)
                 .then((res) => {
                     setErrorMsg("");
@@ -24,8 +25,8 @@ const UserForm = (props) => {
                     setSuccessMsg("");
                     setErrorMsg(err.response.data.error);
                 });
-        }, [props.uid]);
-    }
+        }
+    }, [props.uid]);
     const { fname, lname, email, phone, cp } = user;
 
     const handleOnCreate = (user) => {
