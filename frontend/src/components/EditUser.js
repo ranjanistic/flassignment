@@ -1,3 +1,4 @@
+import React from "react";
 import UserForm from "./UserForm";
 import { useParams } from "react-router-dom";
 
@@ -5,9 +6,9 @@ const EditUser = () => {
     const { id } = useParams();
 
     return (
-        <div>
+        <React.Fragment>
             <UserForm uid={id} />
-        </div>
+        </React.Fragment>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const UserForm = (props) => {
@@ -15,7 +15,7 @@ const UserForm = (props) => {
 
     if (props.uid) {
         useEffect(() => {
-            api.get(`/v1/users/${uid}`)
+            api.get(`/v1/users/${props.uid}`)
                 .then((res) => {
                     setErrorMsg("");
                     setUser({ ...res.data });
@@ -24,7 +24,7 @@ const UserForm = (props) => {
                     setSuccessMsg("");
                     setErrorMsg(err.response.data.error);
                 });
-        }, []);
+        }, [props.uid]);
     }
     const { fname, lname, email, phone, cp } = user;
 
