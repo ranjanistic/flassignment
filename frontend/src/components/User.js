@@ -3,12 +3,13 @@ import { Button, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 const User = ({
-    id,
-    username,
-    author,
-    price,
-    quantity,
-    date,
+    _id,
+    first_name,
+    last_name,
+    email,
+    phone,
+    cp,
+    createdAt,
     handleRemoveUser,
 }) => {
     const history = useHistory();
@@ -16,12 +17,15 @@ const User = ({
     return (
         <Card style={{ width: "18rem" }} className="user">
             <Card.Body>
-                <Card.Title className="user-title">{username}</Card.Title>
+                <Card.Title className="user-title">
+                    {first_name} {last_name}
+                </Card.Title>
                 <div className="user-details">
-                    <div>Author: {author}</div>
-                    <div>Quantity: {quantity} </div>
-                    <div>Price: {price} </div>
-                    <div>Date: {new Date(date).toDateString()}</div>
+                    <div>{email}</div>
+                    <div>
+                        {cp} {phone}{" "}
+                    </div>
+                    <div>{createdAt}</div>
                 </div>
                 <Button
                     variant="primary"
@@ -29,7 +33,13 @@ const User = ({
                 >
                     Edit
                 </Button>{" "}
-                <Button variant="danger" onClick={() => handleRemoveUser(id)}>
+                <Button
+                    variant="primary"
+                    onClick={() => history.push(`/mail/${id}`)}
+                >
+                    Send mail
+                </Button>{" "}
+                <Button variant="danger" onClick={() => handleRemoveUser(_id)}>
                     Delete
                 </Button>
             </Card.Body>

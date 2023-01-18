@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import UserForm from "./UserForm";
+import MailForm from "./MailForm";
 import { useParams } from "react-router-dom";
-import UsersContext from "../context/UsersContext";
 import api from "../utils/axios";
 
-const EditUser = ({ history }) => {
-    //  const { users, setUsers } = useContext(UsersContext);
+const MailUser = ({ history }) => {
     const [user, setUser] = useState({});
     const [error, setError] = useState("");
     const { id } = useParams();
@@ -20,7 +18,7 @@ const EditUser = ({ history }) => {
     }, []);
 
     const handleOnSubmit = (user) => {
-        api.put(`/v1/users/${id}`)
+        api.post(`/v1/users/${id}/mail`)
             .then((res) => {
                 history.push("/");
             })
@@ -31,7 +29,7 @@ const EditUser = ({ history }) => {
 
     return (
         <div>
-            <UserForm
+            <MailForm
                 user={user}
                 handleOnSubmit={handleOnSubmit}
                 error={error}
@@ -40,4 +38,4 @@ const EditUser = ({ history }) => {
     );
 };
 
-export default EditUser;
+export default MailUser;

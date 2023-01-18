@@ -1,14 +1,12 @@
 import React, { useContext, useState } from "react";
-import UserForm from "./UserForm";
-import UsersContext from "../context/UsersContext";
+import MailForm from "./MailForm";
 import api from "../utils/axios";
 
-const AddUser = ({ history }) => {
-    //    const { users, setUsers } = useContext(UsersContext);
+const MailAll = ({ history }) => {
     const [error, setError] = useState("");
 
-    const handleOnSubmit = (user) => {
-        api.post(`/v1/users`, { ...user })
+    const handleOnSubmit = (mail) => {
+        api.post(`/v1/users/mail`, { ...mail })
             .then((res) => {
                 history.push("/");
             })
@@ -19,9 +17,9 @@ const AddUser = ({ history }) => {
 
     return (
         <React.Fragment>
-            <UserForm handleOnSubmit={handleOnSubmit} error={error} />
+            <MailForm handleOnSubmit={handleOnSubmit} error={error} />
         </React.Fragment>
     );
 };
 
-export default AddUser;
+export default MailAll;

@@ -6,7 +6,7 @@ import toml
 
 environ.setdefault('ENV', 'production')
 env = toml.load("config.toml")
-wsgi_app = "app.wsgi:app"
+wsgi_app = "app.wsgi:app()"
 capture_output = True
 pidfile = env.get("PIDFILE", "app.pid")
 # daemon = True

@@ -1,7 +1,8 @@
 from app.wsgi import app
 
-app.run(
-    host=app.config["HOST"] or "127.0.0.1",
-    port=app.config["PORT"] or 5000,
-    debug=(app.config["ENV"] == "development")
+a = app()
+a.run(
+    host=a.config.get("HOST", "127.0.0.1"),
+    port=a.config.get("PORT", 5000),
+    debug=(a.config["ENV"] == "development")
 )

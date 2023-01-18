@@ -5,6 +5,9 @@ import AddUser from "../components/AddUser";
 import UsersList from "../components/UsersList";
 import useApi from "../hooks/useApi";
 import EditUser from "../components/EditUser";
+import MailUser from "../components/MailUser";
+import MailAll from "../components/MailAll";
+
 import UsersContext from "../context/UsersContext";
 
 const AppRouter = () => {
@@ -23,7 +26,9 @@ const AppRouter = () => {
                                 exact={true}
                             />
                             <Route component={AddUser} path="/add" />
+                            <Route component={MailAll} path="/mail" />
                             <Route component={EditUser} path="/edit/:id" />
+                            <Route component={MailUser} path="/mail/:id" />
                             <Route component={() => <Redirect to="/" />} />
                         </Switch>
                     </UsersContext.Provider>

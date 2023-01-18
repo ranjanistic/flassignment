@@ -8,10 +8,13 @@ const Header = () => {
             <hr />
             <div className="links">
                 <NavLink to="/" className="link" activeClassName="active" exact>
-                    Users List
+                    Users
                 </NavLink>
                 <NavLink to="/add" className="link" activeClassName="active">
                     Add User
+                </NavLink>
+                <NavLink to="/mail" className="link" activeClassName="active">
+                    Bulk Mail
                 </NavLink>
             </div>
         </header>
