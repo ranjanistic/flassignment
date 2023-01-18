@@ -83,6 +83,8 @@ def create():
         u["created_at"] = u["created_at"]["$date"]
         u["updated_at"] = u["updated_at"]["$date"]
         return u, 201
+    except ValidationError:
+        return dict(error="Invalid info."), 400
     except NotUniqueError:
         return dict(error="Already exists"), 409
     except Exception as e:

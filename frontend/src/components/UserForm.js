@@ -2,20 +2,55 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const UserForm = (props) => {
-    const [user, setUser] = useState(() => {
-        return {
-            fname: props.user ? props.user.first_name : "",
-            lname: props.user ? props.user.last_name : "",
-            email: props.user ? props.user.email : "",
-            phone: props.user ? props.user.phone : "",
-            cp: props.user ? props.user.country_prefix : "",
-        };
+    const [user, setUser] = useState({
+        fname: "",
+        lname: "",
+        email: "",
+        phone: "",
+        cp: "",
     });
 
     const [errorMsg, setErrorMsg] = useState(props.error || "");
     const [successMsg, setSuccessMsg] = useState(props.success || "");
 
+    if (props.uid) {
+        useEffect(() => {
+            api.get(`/v1/users/${uid}`)
+                .then((res) => {
+                    setErrorMsg("");
+                    setUser({ ...res.data });
+                })
+                .catch((err) => {
+                    setSuccessMsg("");
+                    setErrorMsg(err.response.data.error);
+                });
+        }, []);
+    }
     const { fname, lname, email, phone, cp } = user;
+
+    const handleOnCreate = (user) => {
+        api.post(`/v1/users/`, { ...user })
+            .then((res) => {
+                setErrorMsg("");
+                setSuccessMsg("Added.");
+            })
+            .catch((err) => {
+                setSuccessMsg("");
+                setErrorMsg(err.response.data.error);
+            });
+    };
+    const handleOnUpdate = (user, id) => {
+        api.put(`/v1/users/${id}`, { ...user })
+            .then((res) => {
+                setErrorMsg("");
+                setSuccessMsg("User updated.");
+            })
+            .catch((err) => {
+                setSuccessMsg("");
+                setErrorMsg(err.response.data.error);
+            });
+    };
+
     const handleOnSubmit = (event) => {
         event.preventDefault();
         const values = [fname, lname, email, phone, cp];
@@ -34,7 +69,11 @@ const UserForm = (props) => {
                 phone,
                 cp,
             };
-            props.handleOnSubmit(user);
+            if (props.uid) {
+                handleOnUpdate(user, props.uid);
+            } else {
+                handleOnCreate(user);
+            }
         } else {
             errorMsg = "Please fill out all the fields.";
         }
@@ -110,7 +149,7 @@ const UserForm = (props) => {
                     />
                 </Form.Group>
                 <Button variant="primary" type="submit" className="submit-btn">
-                    Create
+                    {props.uid ? "Update" : "Create"}
                 </Button>
             </Form>
         </div>
