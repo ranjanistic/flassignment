@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import api from "../utils/axios";
 
 const MailForm = (props) => {
-    const [users, setUsers] = useState([{ email: "Everyone" }, ...props.users]);
+    const [users, setUsers] = useState([{ email: "Everyone" }]);
     const [mail, setMail] = useState(() => ({
         subject: "Welcome!",
         message: "",
@@ -14,8 +15,19 @@ const MailForm = (props) => {
     const [errorMsg, setErrorMsg] = useState(props.error || "");
     const [successMsg, setSuccessMsg] = useState(props.success || "");
 
-    const { subject, message, apikey, fromMail, userId } = mail;
+    useEffect(() => {
+        api.get(`/v1/users/`)
+            .then((res) => {
+                setErrorMsg("");
+                setUsers(res.data.users);
+            })
+            .catch((err) => {
+                setSuccessMsg("");
+                setErrorMsg(err.response.data.error);
+            });
+    }, []);
 
+    const { subject, message, apikey, fromMail, userId } = mail;
     const handleOnSubmit = (event) => {
         event.preventDefault();
         const values = [subject, message];
@@ -34,7 +46,21 @@ const MailForm = (props) => {
                 fromMail,
                 userId,
             };
-            props.handleOnSubmit(mail);
+            let url = `/v1/users/mail`;
+            if (mail.userId) {
+                url = `/v1/users/${mail.userId}/mail`;
+            }
+            api.post(url, { ...mail })
+                .then((res) => {
+                    setErrorMsg("");
+                    setSuccessMsg(
+                        "Mail sent. Please note that the email may not reach its destination due to problems with SendGrid. Rest assured, the server as recorded your message & has requested Sendgrid from its side."
+                    );
+                })
+                .catch((err) => {
+                    setSuccessMsg("");
+                    setErrorMsg(err.response.data.error);
+                });
         } else {
             errorMsg = "Please fill the non-optional fields.";
         }

@@ -19,7 +19,13 @@ const UserForm = (props) => {
             api.get(`/v1/users/${props.uid}`)
                 .then((res) => {
                     setErrorMsg("");
-                    setUser({ ...res.data });
+                    setUser({
+                        email: res.data.email,
+                        phone: res.data.phone,
+                        cp: res.data.country_prefix,
+                        fname: res.data.first_name,
+                        lname: res.data.last_name,
+                    });
                 })
                 .catch((err) => {
                     setSuccessMsg("");
@@ -102,6 +108,7 @@ const UserForm = (props) => {
                         type="email"
                         name="email"
                         value={email}
+                        disabled={props.uid ? true : false}
                         placeholder="User's email address"
                         onChange={handleInputChange}
                     />
@@ -110,10 +117,10 @@ const UserForm = (props) => {
                     <Form.Label>User Phone</Form.Label>
                     <Form.Control
                         className="input-control"
-                        type="tel"
+                        type="text"
                         name="cp"
                         value={cp}
-                        placeholder="Country dial code (+91)"
+                        placeholder="Country dial code (+91,+1, etc.)"
                         onChange={handleInputChange}
                     />
                 </Form.Group>
@@ -123,7 +130,7 @@ const UserForm = (props) => {
                         type="tel"
                         name="phone"
                         value={phone}
-                        placeholder="User's phone"
+                        placeholder="User's phone number (no dial code)"
                         onChange={handleInputChange}
                     />
                 </Form.Group>
