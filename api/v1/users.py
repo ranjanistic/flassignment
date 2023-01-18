@@ -4,6 +4,7 @@ from mongoengine.queryset.visitor import Q
 from models import User, Message
 from mongoengine.errors import *
 from utils.mail import sendEmail
+import logging
 
 users = Blueprint('users', __name__)
 
@@ -17,7 +18,7 @@ def get_all():
             u["_id"] = u["_id"]["$oid"]
         return dict(users=us)
     except Exception as e:
-        print(e)
+        logging.error(e)
         return dict(error="Something went wrong"), 500
 
 
@@ -27,7 +28,6 @@ def lookup():
         query = Q()
         search = request.args.get('query', "").strip()
         max = int(request.args.get('max', 20) or 20)
-        print(search)
         if search:
             query = (Q(email__startswith=search) | Q(phone__startswith=search) | Q(first_name__startswith=search) | Q(last_name__startswith=search) | Q(country_prefix__startswith=f"+{search}")
                      | Q(email__contains=search) | Q(phone__contains=search) | Q(first_name__contains=search) | Q(last_name__contains=search)
@@ -51,7 +51,6 @@ def lookup():
                 query = Q(last_name=lname)
             if not (lname or fname or phone or email):
                 return dict(error="No query to search"), 400
-        print(query)
         us = User.objects(query)[:max]
         us = json.loads(us.to_json())
         for u in us:
@@ -60,7 +59,7 @@ def lookup():
     except ValidationError:
         return dict(error="User not found"), 404
     except Exception as e:
-        print(e)
+        logging.error(e)
         return dict(error="Something went wrong"), 500
 
 
@@ -80,7 +79,7 @@ def create():
     except NotUniqueError:
         return dict(error="Already exists"), 409
     except Exception as e:
-        print(e)
+        logging.error(e)
         return dict(error="Something went wrong"), 500
 
 
@@ -96,7 +95,7 @@ def get(userId):
     except ValidationError:
         return dict(error="User not found"), 404
     except Exception as e:
-        print(e)
+        logging.error(e)
         return dict(error="Something went wrong"), 500
 
 
@@ -128,7 +127,7 @@ def update(userId):
     except NotUniqueError:
         return dict(error="Already exists"), 409
     except Exception as e:
-        print(e)
+        logging.error(e)
         return dict(error="Something went wrong"), 500
 
 
@@ -144,7 +143,7 @@ def delete(userId):
     except NotUniqueError:
         return dict(error="Already exists"), 409
     except Exception as e:
-        print(e)
+        logging.error(e)
         return dict(error="Something went wrong"), 500
 
 
@@ -172,7 +171,7 @@ def send_mail(userId):
     except ValidationError:
         return dict(error="User not found"), 404
     except Exception as e:
-        print(e)
+        logging.error(e)
         return dict(error="Something went wrong"), 500
 
 
@@ -197,5 +196,5 @@ def send_mails():
         Message.objects.insert(ms)
         return dict(message="Emails sent to everyone", data=str(sent))
     except Exception as e:
-        print(e)
+        logging.error(e)
         return dict(error="Something went wrong"), 500

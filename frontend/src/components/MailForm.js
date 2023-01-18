@@ -9,7 +9,12 @@ const MailForm = (props) => {
             email: props.user ? props.user.email : "",
         };
     });
-    const [mail, setMail] = useState(() => ({ subject: "", message: "" }));
+    const [mail, setMail] = useState(() => ({
+        subject: "Welcome!",
+        message: "",
+        apikey: "",
+        fromMail: "",
+    }));
 
     const [errorMsg, setErrorMsg] = useState("");
     const { subject, message, apikey, fromMail } = mail;
@@ -42,10 +47,10 @@ const MailForm = (props) => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-            setUser((prevState) => ({
-                    ...prevState,
-                    [name]: value,
-                }));
+        setUser((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
     return (
@@ -59,7 +64,7 @@ const MailForm = (props) => {
                         className="input-control"
                         type="text"
                         name="subject"
-                        value="Welcome!"
+                        value={subject}
                         placeholder="Email subject"
                         onChange={handleInputChange}
                     />
@@ -70,7 +75,7 @@ const MailForm = (props) => {
                         className="input-control"
                         type="text"
                         name="message"
-                        value=""
+                        value={message}
                         placeholder="Write a message"
                         onChange={handleInputChange}
                     />
@@ -82,7 +87,7 @@ const MailForm = (props) => {
                         className="input-control"
                         type="text"
                         name="fromMail"
-                        value=""
+                        value={fromMail}
                         placeholder="Sendgrid 'from' address"
                         onChange={handleInputChange}
                     />
@@ -90,7 +95,7 @@ const MailForm = (props) => {
                         className="input-control"
                         type="password"
                         name="apikey"
-                        value=""
+                        value={apikey}
                         placeholder="Sendgrid API key"
                         onChange={handleInputChange}
                     />

@@ -45,10 +45,10 @@ const UserForm = (props) => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-            setUser((prevState) => ({
-                    ...prevState,
-                    [name]: value,
-                }));
+        setUser((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
     return (
