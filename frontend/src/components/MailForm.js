@@ -12,7 +12,7 @@ const MailForm = (props) => {
     const [mail, setMail] = useState(() => ({ subject: "", message: "" }));
 
     const [errorMsg, setErrorMsg] = useState("");
-    const { subject, message } = mail;
+    const { subject, message, apikey, fromMail } = mail;
     if (props.error) {
         setErrorMsg(props.error);
     }

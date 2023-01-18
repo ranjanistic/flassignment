@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import _ from "lodash";
 import User from "./User";
 import UsersContext from "../context/UsersContext";

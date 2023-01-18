@@ -23,19 +23,19 @@ const User = ({
                 <div className="user-details">
                     <div>{email}</div>
                     <div>
-                        {cp} {phone}{" "}
+                        {cp} {phone}
                     </div>
                     <div>{createdAt}</div>
                 </div>
                 <Button
                     variant="primary"
-                    onClick={() => history.push(`/edit/${id}`)}
+                    onClick={() => history.push(`/edit/${_id}`)}
                 >
                     Edit
                 </Button>{" "}
                 <Button
                     variant="primary"
-                    onClick={() => history.push(`/mail/${id}`)}
+                    onClick={() => history.push(`/mail/${_id}`)}
                 >
                     Send mail
                 </Button>{" "}
