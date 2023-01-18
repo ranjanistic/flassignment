@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
 
 const UserForm = (props) => {
     const [user, setUser] = useState(() => {
         return {
-            fname: props.user ? props.user.fname : "",
-            lname: props.user ? props.user.lname : "",
+            fname: props.user ? props.user.first_name : "",
+            lname: props.user ? props.user.last_name : "",
             email: props.user ? props.user.email : "",
             phone: props.user ? props.user.phone : "",
-            cp: props.user ? props.user.cp : "",
+            cp: props.user ? props.user.country_prefix : "",
         };
     });
 
-    const [errorMsg, setErrorMsg] = useState("");
+    const [errorMsg, setErrorMsg] = useState(props.error || "");
+    const [successMsg, setSuccessMsg] = useState(props.success || "");
+
     const { fname, lname, email, phone, cp } = user;
-    if (props.error) {
-        setErrorMsg(props.error);
-    }
     const handleOnSubmit = (event) => {
         event.preventDefault();
         const values = [fname, lname, email, phone, cp];
@@ -40,6 +38,7 @@ const UserForm = (props) => {
         } else {
             errorMsg = "Please fill out all the fields.";
         }
+        setSuccessMsg("");
         setErrorMsg(errorMsg);
     };
 
@@ -54,6 +53,7 @@ const UserForm = (props) => {
     return (
         <div className="main-form">
             {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+            {successMsg && <p className="successMsg">{successMsg}</p>}
             <Form onSubmit={handleOnSubmit}>
                 <Form.Group controlId="email">
                     <Form.Label>Email address</Form.Label>
@@ -70,7 +70,7 @@ const UserForm = (props) => {
                     <Form.Label>User Phone</Form.Label>
                     <Form.Control
                         className="input-control"
-                        type="number"
+                        type="tel"
                         name="cp"
                         value={cp}
                         placeholder="Country dial code (+91)"
@@ -80,7 +80,7 @@ const UserForm = (props) => {
                 <Form.Group controlId="phone">
                     <Form.Control
                         className="input-control"
-                        type="number"
+                        type="tel"
                         name="phone"
                         value={phone}
                         placeholder="User's phone"

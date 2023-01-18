@@ -1,31 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserForm from "./UserForm";
 import { useParams } from "react-router-dom";
-import UsersContext from "../context/UsersContext";
 import api from "../utils/axios";
 
-const EditUser = ({ history }) => {
-    //  const { users, setUsers } = useContext(UsersContext);
+const EditUser = () => {
     const [user, setUser] = useState({});
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
     const { id } = useParams();
     useEffect(() => {
         api.get(`/v1/users/${id}`)
             .then((res) => {
+                setError("");
                 setUser(res.data);
             })
             .catch((err) => {
-                setError(err.error);
+                setSuccess("");
+                setError(err.data.error);
             });
     }, []);
 
     const handleOnSubmit = (user) => {
-        api.put(`/v1/users/${id}`)
+        api.put(`/v1/users/${id}`, { ...user })
             .then((res) => {
-                history.push("/");
+                setError("");
+                setSuccess("User updated.");
             })
             .catch((err) => {
-                setError(err.error);
+                setSuccess("");
+                setError(err.data.error);
             });
     };
 
@@ -35,6 +39,7 @@ const EditUser = ({ history }) => {
                 user={user}
                 handleOnSubmit={handleOnSubmit}
                 error={error}
+                success={success}
             />
         </div>
     );

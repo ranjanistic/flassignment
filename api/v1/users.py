@@ -4,6 +4,7 @@ from mongoengine.queryset.visitor import Q
 from models import User, Message
 from mongoengine.errors import *
 from utils.mail import sendEmail
+from datetime import datetime
 import logging
 
 users = Blueprint('users', __name__)
@@ -16,6 +17,8 @@ def get_all():
         us = json.loads(us.to_json())
         for u in us:
             u["_id"] = u["_id"]["$oid"]
+            u["created_at"] = u["created_at"]["$date"]
+            u["updated_at"] = u["updated_at"]["$date"]
         return dict(users=us)
     except Exception as e:
         logging.error(e)
@@ -55,6 +58,8 @@ def lookup():
         us = json.loads(us.to_json())
         for u in us:
             u["_id"] = u["_id"]["$oid"]
+            u["created_at"] = u["created_at"]["$date"]
+            u["updated_at"] = u["updated_at"]["$date"]
         return dict(users=us)
     except ValidationError:
         return dict(error="User not found"), 404
@@ -75,6 +80,8 @@ def create():
         u.save()
         u = json.loads(u.to_json())
         u["_id"] = u["_id"]["$oid"]
+        u["created_at"] = u["created_at"]["$date"]
+        u["updated_at"] = u["updated_at"]["$date"]
         return u, 201
     except NotUniqueError:
         return dict(error="Already exists"), 409
@@ -91,6 +98,8 @@ def get(userId):
             raise ValidationError()
         u = json.loads(u.to_json())
         u["_id"] = u["_id"]["$oid"]
+        u["created_at"] = u["created_at"]["$date"]
+        u["updated_at"] = u["updated_at"]["$date"]
         return u
     except ValidationError:
         return dict(error="User not found"), 404
@@ -102,7 +111,7 @@ def get(userId):
 @users.put("/<string:userId>")
 def update(userId):
     try:
-        update = dict()
+        update = dict(updated_at=datetime.utcnow())
         email = request.json.get("email")
         if email:
             update = dict(**update, email=email)

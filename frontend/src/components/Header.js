@@ -14,7 +14,10 @@ const Header = () => {
                     Add User
                 </NavLink>
                 <NavLink to="/mail" className="link" activeClassName="active">
-                    Bulk Mail
+                    Mail
+                </NavLink>
+                <NavLink to="/search" className="link" activeClassName="active">
+                    Search
                 </NavLink>
             </div>
         </header>

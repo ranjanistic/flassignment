@@ -1,11 +1,10 @@
 import React, { useContext, useState } from "react";
 import UserForm from "./UserForm";
-import UsersContext from "../context/UsersContext";
 import api from "../utils/axios";
 
 const AddUser = ({ history }) => {
-    //    const { users, setUsers } = useContext(UsersContext);
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     const handleOnSubmit = (user) => {
         api.post(`/v1/users/`, { ...user })
@@ -13,13 +12,18 @@ const AddUser = ({ history }) => {
                 history.push("/");
             })
             .catch((err) => {
+                setSuccess("");
                 setError(err.data.error);
             });
     };
 
     return (
         <React.Fragment>
-            <UserForm handleOnSubmit={handleOnSubmit} error={error} />
+            <UserForm
+                handleOnSubmit={handleOnSubmit}
+                error={error}
+                success={success}
+            />
         </React.Fragment>
     );
 };

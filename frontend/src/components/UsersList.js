@@ -7,14 +7,18 @@ import api from "../utils/axios";
 const UsersList = () => {
     const [users, setUsers] = useState([]);
     const [errorMsg, setErrorMsg] = useState("");
-    const [log, setLog] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
+
     useEffect(() => {
         setLog("Getting users");
         api.get(`/v1/users/`)
             .then((res) => {
+                setErrorMsg("");
+                setSuccessMsg(`${res.data.users.length} users exist.`);
                 setUsers(res.data.users);
             })
             .catch((err) => {
+                setSuccessMsg("");
                 setErrorMsg(err.data.error);
             });
     }, []);
@@ -24,16 +28,18 @@ const UsersList = () => {
             .then((res) => {
                 api.get(`/v1/users/`)
                     .then((res) => {
-                        setLog(JSON.stringify(res.data));
+                        setErrorMsg("");
+                        setSuccessMsg("User deleted.");
                         setUsers(res.data.users);
                     })
                     .catch((err) => {
-                        setLog(err.data);
+                        setSuccessMsg("");
+
                         setErrorMsg(err.data.error);
                     });
             })
             .catch((err) => {
-                setLog(err);
+                setSuccessMsg("");
                 setErrorMsg(err.data.error);
             });
     };
@@ -41,7 +47,7 @@ const UsersList = () => {
     return (
         <React.Fragment>
             {errorMsg && <p className="errorMsg">{errorMsg}</p>}
-            <code>{log}</code>
+            {successMsg && <p className="successMsg">{successMsg}</p>}
             <div className="user-list">
                 {!_.isEmpty(users) ? (
                     users.map((user) => (
@@ -52,9 +58,7 @@ const UsersList = () => {
                         />
                     ))
                 ) : (
-                    <p className="message">
-                        No users available. Please add some users.
-                    </p>
+                    <p className="message">No users available.</p>
                 )}
             </div>
         </React.Fragment>

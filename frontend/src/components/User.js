@@ -8,8 +8,8 @@ const User = ({
     last_name,
     email,
     phone,
-    cp,
-    createdAt,
+    country_prefix,
+    created_at,
     handleRemoveUser,
 }) => {
     const history = useHistory();
@@ -23,21 +23,15 @@ const User = ({
                 <div className="user-details">
                     <div>{email}</div>
                     <div>
-                        {cp} {phone}
+                        {country_prefix} {phone}
                     </div>
-                    <div>{createdAt}</div>
+                    <div>{new Date(created_at).toLocaleString()}</div>
                 </div>
                 <Button
                     variant="primary"
                     onClick={() => history.push(`/edit/${_id}`)}
                 >
                     Edit
-                </Button>{" "}
-                <Button
-                    variant="primary"
-                    onClick={() => history.push(`/mail/${_id}`)}
-                >
-                    Send mail
                 </Button>{" "}
                 <Button variant="danger" onClick={() => handleRemoveUser(_id)}>
                     Delete
