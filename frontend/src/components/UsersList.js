@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import User from "./User";
 import UsersContext from "../context/UsersContext";
@@ -10,7 +10,6 @@ const UsersList = () => {
     const [successMsg, setSuccessMsg] = useState("");
 
     useEffect(() => {
-        setLog("Getting users");
         api.get(`/v1/users/`)
             .then((res) => {
                 setErrorMsg("");
