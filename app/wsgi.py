@@ -6,6 +6,7 @@ from database import mongo
 
 mongo.init()
 
+
 def app():
     a = Config(Flask(__name__)).app()
     router(a, request)

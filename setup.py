@@ -16,4 +16,3 @@ print("\nYou may check config.toml file to ensure that it is setup properly.\n")
 
 with open("config.toml", "w") as f:
     f.write(data)
-

@@ -1,12 +1,13 @@
 import pytest
 from app.wsgi import app as myapp
 
+
 @pytest.fixture()
 def app():
     app = myapp()
     app.config.update({
         "TESTING": True,
-        "ENV":"testing"
+        "ENV": "testing"
     })
     yield app
 

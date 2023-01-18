@@ -12,9 +12,9 @@ pidfile = env.get("PIDFILE", "app.pid")
 # daemon = True
 bind = f"{env.get('HOST', os.environ.get('HOST', '0.0.0.0'))}:{env.get('PORT', os.environ.get('PORT'))}"
 max_requests = 1000
-#accesslog = "app.access.log"
-#errorlog = "app.error.log"
+# accesslog = "app.access.log"
+# errorlog = "app.error.log"
 worker_class = 'gevent'
 workers = cpu_count()
 
-#print("Logs at", accesslog, errorlog)
+# print("Logs at", accesslog, errorlog)
