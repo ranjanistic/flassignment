@@ -13,11 +13,11 @@ const EditUser = () => {
         api.get(`/v1/users/${id}`)
             .then((res) => {
                 setError("");
-                setUser(res.data);
+                setUser({ ...res.data });
             })
             .catch((err) => {
                 setSuccess("");
-                setError(err.data.error);
+                setError(err.response.data.error);
             });
     }, []);
 
@@ -29,7 +29,7 @@ const EditUser = () => {
             })
             .catch((err) => {
                 setSuccess("");
-                setError(err.data.error);
+                setError(err.response.data.error);
             });
     };
 

@@ -14,7 +14,7 @@ const MailUsers = () => {
             })
             .catch((err) => {
                 setSuccess("");
-                setError(err.data.error);
+                setError(err.response.data.error);
             });
     }, []);
 
@@ -32,7 +32,7 @@ const MailUsers = () => {
             })
             .catch((err) => {
                 setSuccess("");
-                setError(err.data.error);
+                setError(err.response.data.error);
             });
     };
 

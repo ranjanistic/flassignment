@@ -1,19 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import UserForm from "./UserForm";
 import api from "../utils/axios";
 
-const AddUser = ({ history }) => {
+const AddUser = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
     const handleOnSubmit = (user) => {
         api.post(`/v1/users/`, { ...user })
             .then((res) => {
-                history.push("/");
+                setError("");
+                setSuccess("Added.");
             })
             .catch((err) => {
                 setSuccess("");
-                setError(err.data.error);
+                setError(err.response.data.error);
             });
     };
 

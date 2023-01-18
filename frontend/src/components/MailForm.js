@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const MailForm = (props) => {
-    const [users, setUsers] = useState([{ _id: 0, email: "Everyone" }]);
+    const [users, setUsers] = useState([{ email: "Everyone" }, ...props.users]);
     const [mail, setMail] = useState(() => ({
         subject: "Welcome!",
         message: "",
@@ -15,9 +15,6 @@ const MailForm = (props) => {
     const [successMsg, setSuccessMsg] = useState(props.success || "");
 
     const { subject, message, apikey, fromMail, userId } = mail;
-    if (props.users) {
-        setUsers([{ _id: 0, email: "Everyone" }, ...props.users]);
-    }
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
@@ -41,6 +38,7 @@ const MailForm = (props) => {
         } else {
             errorMsg = "Please fill the non-optional fields.";
         }
+        setSuccessMsg("");
         setErrorMsg(errorMsg);
     };
 
@@ -58,16 +56,17 @@ const MailForm = (props) => {
             {successMsg && <p className="successMsg">{successMsg}</p>}
             <div>Sending mail to?</div>
             <Form onSubmit={handleOnSubmit}>
-                <Form.Select
-                    name="userId"
-                    aria-label="Destination"
-                    onChange={handleInputChange}
-                    value={userId}
-                >
-                    {users.map((user) => (
-                        <option value={user._id}>{user.email}</option>
-                    ))}
-                </Form.Select>
+                <Form.Group controlId="to">
+                    <Form.Select
+                        name="userId"
+                        aria-label="Destination"
+                        onChange={handleInputChange}
+                    >
+                        {users.map((user) => (
+                            <option value={user._id || ""}>{user.email}</option>
+                        ))}
+                    </Form.Select>
+                </Form.Group>
                 <Form.Group controlId="subject">
                     <Form.Label>Subject</Form.Label>
                     <Form.Control

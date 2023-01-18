@@ -18,7 +18,7 @@ const UsersList = () => {
             })
             .catch((err) => {
                 setSuccessMsg("");
-                setErrorMsg(err.data.error);
+                setErrorMsg(err.response.data.error);
             });
     }, []);
 
@@ -34,12 +34,12 @@ const UsersList = () => {
                     .catch((err) => {
                         setSuccessMsg("");
 
-                        setErrorMsg(err.data.error);
+                        setErrorMsg(err.response.data.error);
                     });
             })
             .catch((err) => {
                 setSuccessMsg("");
-                setErrorMsg(err.data.error);
+                setErrorMsg(err.response.data.error);
             });
     };
 

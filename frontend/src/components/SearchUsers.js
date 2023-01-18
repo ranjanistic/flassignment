@@ -18,7 +18,7 @@ const SearchUsers = () => {
             })
             .catch((err) => {
                 setSuccessMsg("");
-                setErrorMsg(err.data.error);
+                setErrorMsg(err.response.data.error);
             });
     };
 
@@ -33,7 +33,7 @@ const SearchUsers = () => {
         });
 
         if (allFieldsFilled) {
-            api.get(`/v1/users/search/?query=${query}`)
+            api.get(`/v1/users/search?query=${query}`)
                 .then((res) => {
                     setErrorMsg("");
                     setSuccessMsg(`${res.data.users.length} users found.`);
@@ -41,7 +41,7 @@ const SearchUsers = () => {
                 })
                 .catch((err) => {
                     setSuccessMsg("");
-                    setErrorMsg(err.data.error);
+                    setErrorMsg(err.response.data.error);
                 });
         } else {
             errorMsg = "Type something to search.";
