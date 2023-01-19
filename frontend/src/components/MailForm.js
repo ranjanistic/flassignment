@@ -81,17 +81,6 @@ const MailForm = () => {
             {errorMsg && <p className="errorMsg">{errorMsg}</p>}
             {successMsg && <p className="successMsg">{successMsg}</p>}
             <Form onSubmit={handleOnSubmit}>
-                <Form.Group controlId="to">
-                    <Form.Select
-                        name="userId"
-                        aria-label="Destination"
-                        onChange={handleInputChange}
-                    >
-                        {users.map((user) => (
-                            <option value={user._id || ""}>{user.email}</option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
                 <Form.Group controlId="subject">
                     <Form.Label>Subject</Form.Label>
                     <Form.Control
