@@ -61,8 +61,6 @@ def lookup():
             u["created_at"] = u["created_at"]["$date"]
             u["updated_at"] = u["updated_at"]["$date"]
         return dict(users=us)
-    except ValidationError:
-        return dict(error="User not found"), 404
     except Exception as e:
         logging.error(e)
         return dict(error="Something went wrong"), 500
@@ -97,13 +95,13 @@ def get(userId):
     try:
         u = User.objects(pk=userId).first()
         if not u:
-            raise ValidationError()
+            raise DoesNotExist()
         u = json.loads(u.to_json())
         u["_id"] = u["_id"]["$oid"]
         u["created_at"] = u["created_at"]["$date"]
         u["updated_at"] = u["updated_at"]["$date"]
         return u
-    except ValidationError:
+    except DoesNotExist:
         return dict(error="User not found"), 404
     except Exception as e:
         logging.error(e)
@@ -131,9 +129,11 @@ def update(userId):
             update = dict(**update, last_name=lname)
         u = User.objects(pk=userId).update_one(**update)
         if not u:
-            raise ValidationError()
+            raise DoesNotExist()
         return dict(message="Updated"), 202
     except ValidationError:
+        return dict(error="Invalid details"), 400
+    except DoesNotExist:
         return dict(error="User not found"), 404
     except NotUniqueError:
         return dict(error="Already exists"), 409
@@ -147,9 +147,9 @@ def delete(userId):
     try:
         u = User.objects(pk=userId).delete()
         if not u:
-            raise ValidationError()
+            raise DoesNotExist()
         return dict(message="Deleted")
-    except ValidationError:
+    except DoesNotExist:
         return dict(error="User not found"), 404
     except NotUniqueError:
         return dict(error="Already exists"), 409
@@ -163,7 +163,7 @@ def send_mail(userId):
     try:
         u = User.objects(pk=userId).first()
         if not u:
-            raise ValidationError()
+            raise DoesNotExist()
         subject = request.json.get("subject", "Welcome").strip() or "Welcome"
         message = request.json.get("message")
         apikey = request.json.get("apikey")
@@ -179,7 +179,7 @@ def send_mail(userId):
         m.sent = True
         m.save()
         return dict(message="Email sent", data=str(sent))
-    except ValidationError:
+    except DoesNotExist:
         return dict(error="User not found"), 404
     except Exception as e:
         logging.error(e)
