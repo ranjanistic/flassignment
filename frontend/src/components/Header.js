@@ -11,6 +11,7 @@ const Header = () => {
                     Priyanshu Ranjan
                 </a>
             </h6>
+            <p>Note: Initial server response may take a few moments due to free hosting.</p>
             <hr />
             <div className="links">
                 <NavLink to="/" className="link" activeClassName="active" exact>
