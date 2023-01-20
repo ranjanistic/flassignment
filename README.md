@@ -78,3 +78,11 @@ npm run build
 npm i -g serve
 serve -s build
 ```
+
+## Test
+
+- Backend
+
+```bash
+pytest
+```
