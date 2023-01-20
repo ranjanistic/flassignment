@@ -54,7 +54,11 @@ const MailForm = () => {
                 .then((res) => {
                     setErrorMsg("");
                     setSuccessMsg(
-                        "Mail sent. Please note that the email may not reach its destination due to problems with SendGrid. Rest assured, the server as recorded your message & has requested Sendgrid from its side."
+                        `Mail sent. ${
+                            apikey
+                                ? ""
+                                : "Please note that the email may not reach its destination due to problems with SendGrid. Rest assured, the server as recorded your message & has requested Sendgrid from its side."
+                        }`
                     );
                 })
                 .catch((err) => {

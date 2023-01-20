@@ -175,7 +175,7 @@ def send_mail(userId):
         sent = sendEmail(to=u.email, subject=m.subject,
                          message=m.message, apikey=apikey, fromMail=fromMail)
         if not sent:
-            return dict(error="Something went wrong with tbe third party email service"), 503
+            return dict(error="Something went wrong with the third party email service"), 503
         m.sent = True
         m.save()
         return dict(message="Email sent", data=str(sent))
@@ -203,7 +203,7 @@ def send_mails():
         sent = sendEmail(to=list(map(lambda u: u.email, us)), subject=subject,
                          message=message, apikey=apikey, fromMail=fromMail)
         if not sent:
-            return dict(error="Something went wrong with tbe third party email service"), 503
+            return dict(error="Something went wrong with the third party email service"), 503
         Message.objects.insert(ms)
         return dict(message="Emails sent to everyone", data=str(sent))
     except Exception as e:
